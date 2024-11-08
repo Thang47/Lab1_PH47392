@@ -33,44 +33,53 @@ public class ProductDAO {
 
     // Thêm một sản phẩm mới
     public long insertProduct(ProductDTO product) {
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put("name", product.getName());
         values.put("price", product.getPrice());
         values.put("id_cat", product.getId_cat());
-        return db.insert("tb_product", null, values);
+        long result = db.insert("tb_product", null, values);
+        db.close();
+        return result;
     }
 
     // Lấy tất cả sản phẩm
     public List<ProductDTO> getAllProducts() {
-        List<ProductDTO> productList = new ArrayList<>();
-        Cursor cursor = db.query("tb_product", null, null, null, null, null, null);
-
-        if (cursor != null) {
-            while (cursor.moveToNext()) {
+        List<ProductDTO> products = new ArrayList<>();
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+        Cursor cursor = db.rawQuery("SELECT * FROM tb_product", null);
+        if (cursor.moveToFirst()) {
+            do {
                 int id = cursor.getInt(cursor.getColumnIndexOrThrow("id"));
                 String name = cursor.getString(cursor.getColumnIndexOrThrow("name"));
                 double price = cursor.getDouble(cursor.getColumnIndexOrThrow("price"));
-                int id_cat = cursor.getInt(cursor.getColumnIndexOrThrow("id_cat"));
-                productList.add(new ProductDTO(id, name, price, id_cat));
-            }
-            cursor.close();
+                int idCat = cursor.getInt(cursor.getColumnIndexOrThrow("id_cat"));
+                products.add(new ProductDTO(id, name, price, idCat));
+            } while (cursor.moveToNext());
         }
-        return productList;
+        cursor.close();
+        db.close();
+        return products;
     }
-
-    // Xóa sản phẩm
+    // Xoá sản phẩm
     public int deleteProduct(int id) {
-        return db.delete("tb_product", "id = ?", new String[]{String.valueOf(id)});
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        int result = db.delete("tb_product", "id = ?", new String[]{String.valueOf(id)});
+        db.close();
+        return result;
     }
-
-    // Cập nhật sản phẩm
+    // cập nhật sản phẩm
     public int updateProduct(ProductDTO product) {
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put("name", product.getName());
         values.put("price", product.getPrice());
         values.put("id_cat", product.getId_cat());
-        return db.update("tb_product", values, "id = ?", new String[]{String.valueOf(product.getId())});
+        int result = db.update("tb_product", values, "id = ?", new String[]{String.valueOf(product.getId())});
+        db.close();
+        return result;
     }
+
 }
 
 
