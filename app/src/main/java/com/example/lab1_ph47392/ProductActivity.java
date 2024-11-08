@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -83,6 +84,8 @@ public class ProductActivity extends AppCompatActivity {
                 if (result > 0) {
                     updateProductList();  // Cập nhật danh sách sản phẩm
                 }
+            }else {
+                Toast.makeText(ProductActivity.this,"Vui lòng chọn sản phẩm cần cập nhật",Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -93,6 +96,8 @@ public class ProductActivity extends AppCompatActivity {
                 if (result > 0) {
                     updateProductList();  // Cập nhật danh sách sản phẩm
                 }
+            }else {
+                Toast.makeText(ProductActivity.this, "Vui lòng chọn sản phẩm để xóa", Toast.LENGTH_SHORT).show();
             }
         });
     }
