@@ -39,6 +39,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 PRODUCT_CAT_ID + " INTEGER, " +
                 "FOREIGN KEY(" + PRODUCT_CAT_ID + ") REFERENCES " + TABLE_CAT + "(" + CAT_ID + "))";
         db.execSQL(createTableProduct);
+
+        db.execSQL("INSERT INTO " + TABLE_CAT + " (" + CAT_NAME + ") VALUES ('Category 1')");
+        db.execSQL("INSERT INTO " + TABLE_CAT + " (" + CAT_NAME + ") VALUES ('Category 2')");
+        db.execSQL("INSERT INTO " + TABLE_CAT + " (" + CAT_NAME + ") VALUES ('Category 3')");
     }
 
     @Override
