@@ -15,6 +15,13 @@
         android:layout_height="wrap_content"
         android:text="Open Categories"
         android:layout_gravity="center"/>
+    <Button
+        android:layout_marginTop="20dp"
+        android:id="@+id/buttonOpenProductActivity"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Open Product List"
+        android:layout_gravity="center"/>
 
 
 
